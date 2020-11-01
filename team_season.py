@@ -1,30 +1,12 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
-from requests_html import HTMLSession
-from requests_html import AsyncHTMLSession
-import asyncio
 import re
 
 url = "https://www.basketball-reference.com/teams/ATL/2020.html"
 
 html = urlopen(url)
 soup = BeautifulSoup(html,features="html.parser")
-# print(soup.getText())
-
-# headers = [th.getText() for th in soup.findAll('table')[1].find('tr').findAll('th')]
-# print(headers)
-
-# rows = soup.findAll('tbody')[1].findAll('tr')
-# print(rows)
-
-# player_stats = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
-#             for i in range(len(rows))]
-# print(player_stats)
-
-# stats = pd.DataFrame(player_stats, columns = headers)
-# stats.head(10)
-# print(stats)
 
 
 
@@ -98,42 +80,58 @@ def get_arena():
 def get_team_games():
     rowText = soup.find("div", {"id":"timeline_results"}).findAll("li",{"class":"result"})
     rowText = [s.getText() for s in rowText]
-    for row in rowText:
-        
-        s = re.split("-| (|) |,| ",row)
+    headers = ['No.','Date','Home Game','Opponent','Win','Team Score','Opponent Score','Wins','Losses',]
+    data = []
+    for r in rowText:
+        r = r.replace('(',' ').replace(')',' ').strip()
+        # print(r)
+        s = re.split("-|,| ",r)
         print(s)
         months = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
-        res = {}
-        res["month"] = months[s[2]]
-        res["day"] = s[4]
-        res["home"] = not s[6] == '@'
-        # if res["home"]: 
-        #     res["opp"] = s[8]
-        #     res["wins"] = 
-        #     res["losses"] = 
-        #     res["team_score"] = 
-        #     res["opp_score"] = 
-        #     res["result"] = 
-        # else:
-
+        row = []
         
-get_team_games()
+        row.append(int(s[0][:-1]))
+        row.append(str(months[s[1]] )+ '-' + s[2])
+        row.append(not s[3] == '@')
+
+        if row[-1]:
+            row.append(s[-4])
+            row.append(s[9] == "beat")
+            row.append(int(s[-2]))
+            row.append(int(s[-1]))
+            row.append(int(s[6]))
+            row.append(int(s[7]))
+            
+            
+        else:
+            row.append(s[4])
+            row.append(s[11] == "beat")
+            row.append(int(s[-2]))
+            row.append(int(s[-1]))
+            row.append(int(s[8]))
+            row.append(int(s[9]))
+
+        data.append(row)
+
+
+    res = pd.DataFrame(data, columns = headers)
+    print(res)
+    return res
+
 
 ##Roster Table
 def get_roster():
     headers = [th.getText() for th in soup.find('table').find('tr').findAll('th')]
-
+    print(headers)
     rows = soup.find('tbody').findAll('tr')
 
-    player_stats = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
+    data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
                 for i in range(len(rows))]
 
-    stats = pd.DataFrame(player_stats, columns = headers)
-    stats.head(10)
-    print(stats)
+    stats = pd.DataFrame(data, columns = headers)
+    print(data)
     return stats
 
-##Injuries???
 
 ##Per Game Table
 def get_per_game():
@@ -143,12 +141,11 @@ def get_per_game():
     rows = soup.findAll('tbody')[1].findAll('tr')
     print(rows)
 
-    player_stats = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
+    data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
                 for i in range(len(rows))]
-    print(player_stats)
+    print(data)
 
-    stats = pd.DataFrame(player_stats, columns = headers)
-    stats.head(10)
+    stats = pd.DataFrame(data, columns = headers)
     print(stats)
 
 
