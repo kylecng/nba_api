@@ -20,7 +20,6 @@ def get_seasons():
     data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
                 for i in range(len(rows))]
     # print(data)
-    res = pd.DataFrame(data, columns = headers)
-    res = res.to_dict()
+    res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
     print(res)
     return res

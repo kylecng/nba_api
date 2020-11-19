@@ -14,28 +14,46 @@ def url_builder(team,year):
     print(url)
     return url
 
-
-##record; wins, losses, conference standing
-def get_record(team,year):
+def get_team_season(team,year):
     url = url_builder(team,year)
     html = urlopen(url)
     soup = BeautifulSoup(html,features="html.parser")
+    res = {}
+    res['record'] = get_season_record(team,year)
+    res['coach'] = get_coach(team,year)
+    res['executive'] = get_exec(team,year)
+    res['pace'] = get_pace(team,year)
+    res['off_rtg'] = get_off_rtg(team,year)
+    res['def_rtg'] = get_def_rtg(team,year)
+    res['arena'] = get_arena(team,year)
+    res['game_scores'] = get_game_scores(team,year)
+    res['roster_stats'] = get_roster_stats(team,year)
+    res['per_game_stats'] = get_per_game_stats(team,year)
+    return res
+
+##record; wins, losses, conference standing
+def get_season_record(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     text = soup.find("div", {"id":"info"}).find("div",{"data-template" : "Partials/Teams/Summary"}).find("p").getText()
     nums = [int(s) for s in re.split('t|-|,| ',text)if s.isdigit()]
     res = {}
     res["wins"] = nums[0]
     res["losses"] = nums[1]
-    res["rank"] = nums[2]
+    res["conference_standing"] = nums[2]
     print(res)
     return res
 
 
 
 ##Coach
-def get_coach(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_coach(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     text = soup.find("div", {"id":"info"}).find("div",{"data-template" : "Partials/Teams/Summary"}).findAll("p")[2].getText()
     s = text.split()
     res = s[1] + ' ' + s[2]
@@ -43,20 +61,23 @@ def get_coach(team,year):
     return res
 
 ##Executive
-def get_exec(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_exec(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     text = soup.find("div", {"id":"info"}).find("div",{"data-template" : "Partials/Teams/Summary"}).findAll("p")[3].getText()
     s = text.split()
     res = s[1] + ' ' + s[2]
     print(res)
+    return res
 
 ##pace
-def get_pace(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_pace(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     text = soup.find("div", {"id":"info"}).find("div",{"data-template" : "Partials/Teams/Summary"}).findAll("p")[5].getText()
     s = text.split()
     res = s[6]
@@ -64,10 +85,11 @@ def get_pace(team,year):
     return res
 
 ##Off Rtg
-def get_off_rtg(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_off_rtg(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     text = soup.find("div", {"id":"info"}).find("div",{"data-template" : "Partials/Teams/Summary"}).findAll("p")[6].getText()
     s = text.split()
     res = s[2]
@@ -75,10 +97,11 @@ def get_off_rtg(team,year):
     return res
 
 ##Def Rtg
-def get_def_rtg(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_def_rtg(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     text = soup.find("div", {"id":"info"}).find("div",{"data-template" : "Partials/Teams/Summary"}).findAll("p")[6].getText()
     s = text.split()
     res = s[8]
@@ -86,10 +109,11 @@ def get_def_rtg(team,year):
     return res
 
 ##Arena
-def get_arena(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_arena(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     text = soup.find("div", {"id":"info"}).find("div",{"data-template" : "Partials/Teams/Summary"}).findAll("p")[9].getText()
     s = text.split()
     res = ""
@@ -103,10 +127,11 @@ def get_arena(team,year):
 
 ##Games Table
     ##Game: date, team, home/away, record, result, team record, opponent record
-def get_team_games(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_game_scores(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     rowText = soup.find("div", {"id":"timeline_results"}).findAll("li",{"class":"result"})
     rowText = [s.getText() for s in rowText]
     headers = ['No.','Date','Home Game','Opponent','Win','Team Score','Opponent Score','Wins','Losses',]
@@ -143,31 +168,33 @@ def get_team_games(team,year):
         data.append(row)
 
 
-    res = pd.DataFrame(data, columns = headers).to_dict()
+    res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
     print(res)
     return res
 
 
 ##Roster Table
-def get_roster(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_roster_stats(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     headers = [th.getText() for th in soup.find('table').find('tr').findAll('th')]
     rows = soup.find('tbody').findAll('tr')
 
     data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
                 for i in range(len(rows))]
 
-    res = pd.DataFrame(data, columns = headers).to_dict()
+    res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
     return res
 
 
 ##Per Game Table
-def get_per_game(team,year):
-    url = url_builder(team,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+def get_per_game_stats(team,year,soup=None):
+    if soup is None:
+        url = url_builder(team,year)
+        html = urlopen(url)
+        soup = BeautifulSoup(html,features="html.parser")
     headers = [th.getText() for th in soup.findAll('table')[1].find('tr').findAll('th')]
 
     rows = soup.findAll('tbody')[1].findAll('tr')
@@ -175,7 +202,7 @@ def get_per_game(team,year):
     data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
                 for i in range(len(rows))]
 
-    res = pd.DataFrame(data, columns = headers).to_dict()
+    res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
     print(res)
     return res
 

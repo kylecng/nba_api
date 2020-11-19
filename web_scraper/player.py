@@ -23,7 +23,7 @@ def url_builder(first_name,last_name):
     print(url)
     return url
 
-def get_player_stats(first_name,last_name):
+def get_player_per_game_stats(first_name,last_name):
     url = url_builder(first_name,last_name)
     html = urlopen(url)
     soup = BeautifulSoup(html,features="html.parser")
@@ -34,7 +34,7 @@ def get_player_stats(first_name,last_name):
     data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
                 for i in range(len(rows))]
 
-    stats = pd.DataFrame(data, columns = headers)
-    print(stats)
-    return stats
+    res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
+    # print(res)
+    return res
 
