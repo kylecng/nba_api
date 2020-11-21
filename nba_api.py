@@ -22,10 +22,15 @@ firebase_admin.initialize_app(cred, {
 
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+app.config["DEBUG"] = False
 
 app.config['JSON_SORT_KEYS'] = False
 
+
+
+@app.route('/', methods=['GET'])
+def get_game(year,month,day,home_team):
+    return 'Basketball Reference API'
 
 @app.route('/games/<int:year>/<int:month>/<int:day>/games_data/<home_team>', methods=['GET'])
 def get_game(year,month,day,home_team):
