@@ -1,1 +1,1 @@
-web: gunicorn app:nba_api
+web: gunicorn --bind 0.0.0.0:$PORT flaskapp:nba_api
