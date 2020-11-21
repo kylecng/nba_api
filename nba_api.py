@@ -11,7 +11,6 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 from secrets import *
-from firebase import firebase
 from datetime import datetime
 
 # Fetch the service account key JSON file contents

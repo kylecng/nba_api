@@ -1,0 +1,1 @@
+web: gunicorn app:nba_api
