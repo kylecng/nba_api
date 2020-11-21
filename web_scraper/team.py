@@ -21,7 +21,7 @@ def get_team(team):
     res['record'] = get_record(team,soup)
     res['num_playoffs'] = get_num_playoffs(team,soup)
     res['num_champs'] = get_num_champs(team,soup)
-    res['seasons_stats'] = get_seasons_stats(team,soup)
+    res['seasons_stats'] = get_seasons_summaries(team,soup)
 
 #Location
 def get_team_location(team,soup=None):
@@ -97,7 +97,7 @@ def get_num_champs(team,soup=None):
     return res
 
 #Seasons
-def get_seasons_stats(team,soup=None):
+def get_seasons_summaries(team,soup=None):
     if soup is None:
         url = url_builder(team)
         html = urlopen(url)
@@ -113,3 +113,16 @@ def get_seasons_stats(team,soup=None):
     res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
     print(res)
     return res
+
+url = 'https://www.basketball-reference.com/teams/ATL/stats_basic_totals.html'
+html = urlopen(url)
+soup = BeautifulSoup(html,features="html.parser")
+print(soup.find('table').getText())
+table = soup.find('table')
+headers = [th.getText() for th in soup.find('thead').findAll('th')]
+rows = soup.findAll('tbody')[0].findAll('tr', {'class' : not 'thead'})
+print(rows)
+data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
+            for i in range(len(rows))]
+res = pd.DataFrame(data, columns = headers).drop(columns=[headers[6]]).to_dict(orient='index')
+print(res)
