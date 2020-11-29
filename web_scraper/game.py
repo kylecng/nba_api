@@ -56,7 +56,7 @@ def get_table(year,month,day,home_team,t,soup = None):
                     for i in range(len(rows)) if i != 5]
 
     res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
-    print(res)
+    # print(res)
     return res
 
 def get_game_table(year,month,day,home_team,team='HOME',stats='BASIC',time="G",soup=None):
@@ -108,6 +108,6 @@ def get_game(year,month,day,home_team):
         key = '_'.join(key).lower()
         table = get_game_table(year,month,day,home_team,teams[i],boxes[i],times[i],soup)
         res[key] = table
-    print(res)
+    # print(res)
     return res
-
+get_game(2020,10,11,'MIA')

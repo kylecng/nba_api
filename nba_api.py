@@ -17,7 +17,7 @@ from datetime import datetime
 cred = credentials.Certificate('service_account_key.json')
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'database_url'
+    'databaseURL': database_url
 })
 
 
@@ -34,12 +34,14 @@ def home():
 
 @app.route('/games/<int:year>/<int:month>/<int:day>/games_data/<home_team>', methods=['GET'])
 def get_game(year,month,day,home_team):
+    print('HMMMMMMMMMMMMMMMMMM')
     ref = db.reference(request.path)
     res = ref.get()
     if (res == None):
         res = game.get_game(year,month,day,home_team)
     ref.set(res)
     return res
+
 
 
 
