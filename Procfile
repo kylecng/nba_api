@@ -1,1 +1,1 @@
-web: gunicorn app:nba_api
+web: gunicorn app:app
