@@ -146,4 +146,4 @@ def get_team_seasons_per_game_stats(team,soup=None):
                 for i in range(len(rows))]
     res = pd.DataFrame(data, columns = headers).drop(columns=[headers[6]]).to_dict(orient='index')
     print(res)
-get_team_seasons_per_game_stats('ATL')
+# get_team_seasons_per_game_stats('ATL')
