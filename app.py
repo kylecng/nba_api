@@ -13,6 +13,7 @@ from firebase_admin import db
 from secrets import *
 from datetime import datetime
 
+
 # Fetch the service account key JSON file contents
 cred = credentials.Certificate('service_account_key.json')
 # Initialize the app with a service account, granting admin privileges
@@ -32,15 +33,22 @@ app.config['JSON_SORT_KEYS'] = False
 def home():
     return 'Basketball Reference API'
 
+
+
+
+
+
 @app.route('/games/<int:year>/<int:month>/<int:day>/games_data/<home_team>', methods=['GET'])
 def get_game(year,month,day,home_team):
-    print('HMMMMMMMMMMMMMMMMMM')
     ref = db.reference(request.path)
     res = ref.get()
     if (res == None):
         res = game.get_game(year,month,day,home_team)
     ref.set(res)
     return res
+
+
+
 
 
 
@@ -59,10 +67,13 @@ def get_game_scores_day(year,month,day):
 def get_game_scores_season(year):
     ref = db.reference(request.path)
     res = ref.get()
-    if (res == None) or year + 1 >= datetime.today().year:
+    if (res == None):
         res = games.get_game_scores_season(year)
     ref.set(res)
     return res
+
+
+
 
 
 
@@ -80,14 +91,30 @@ def get_player_per_game_stats(first_name,last_name):
 
 
 
-
-##get team season
-@app.route('/teams/<team>/seasons/<int:year>', methods=['GET'])
-def get_team_season(team,year):
+@app.route('/teams/<team_name>/seasons_summaries', methods=['GET'])
+def get_team_seasons_summaries(team_name):
     ref = db.reference(request.path)
     res = ref.get()
     if (res == None):
-        res = team_season.get_team_season(team,year)
+        res = team.get_team_seasons_summaries(team_name)
+    ref.set(res)
+    return res
+
+@app.route('/teams/<team_name>/seasons_total_stats', methods=['GET'])
+def get_team_seasons_total_stats(team_name):
+    ref = db.reference(request.path)
+    res = ref.get()
+    if (res == None):
+        res = team.get_team_seasons_total_stats(team_name)
+    ref.set(res)
+    return res
+
+@app.route('/teams/<team_name>/per_game_stats', methods=['GET'])
+def get_team_seasons_per_game_stats(team_name):
+    ref = db.reference(request.path)
+    res = ref.get()
+    if (res == None):
+        res = team.get_team_seasons_per_game_stats(team_name)
     ref.set(res)
     return res
 
@@ -95,15 +122,27 @@ def get_team_season(team,year):
 
 
 
-##get team
-@app.route('/team/<team>', methods=['GET'])
-def get_team(team):
+
+@app.route('/teams/<team_name>/<int:year>/game_scores', methods=['GET'])
+def get_team_season_game_scores(team_name,year):
     ref = db.reference(request.path)
     res = ref.get()
     if (res == None):
-        res = team.get_team(team)
+        res = team_season.get_team_season_game_scores(team_name,year)
     ref.set(res)
     return res
+
+@app.route('/teams/<team_name>/<int:year>/players_per_game_stats', methods=['GET'])
+def get_team_season_players_per_game_stats(team_name,year):
+    ref = db.reference(request.path)
+    res = ref.get()
+    if (res == None):
+        res = team_season.get_team_season_players_per_game_stats(team_name,year)
+    ref.set(res)
+    return res
+
+
+
 
 
 

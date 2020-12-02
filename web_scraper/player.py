@@ -20,7 +20,7 @@ def url_builder(first_name,last_name):
         builder.append(first_name[:2])
     builder.append('01.html')
     url = "".join(builder)
-    print(url)
+    # print(url)
     return url
 
 def get_player_per_game_stats(first_name,last_name):
@@ -35,6 +35,6 @@ def get_player_per_game_stats(first_name,last_name):
                 for i in range(len(rows))]
 
     res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
+    res["ignoreme"] = True
     # print(res)
     return res
-

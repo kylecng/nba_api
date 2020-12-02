@@ -24,18 +24,20 @@ def url_builder(year,month=None,day=None):
         builder.append('&year=')
         builder.append(str(year))
     url = "".join(builder)
-    print(url)
+    # print(url)
     return url
 
 def get_game_scores_day(year,month,day):
-    url = url_builder(month,day,year)
+    url = url_builder(year,month,day)
     html = urlopen(url)
     soup = BeautifulSoup(html,features="html.parser")
 
     res = {}
+    res["ignoreme"] = True
     games = soup.find('div',{'class':'game_summaries'})
+    # print(games)
     if not games:
-        print(res)
+        # print(res)
         return res
     games = games.findAll('div',{'class': 'game_summary expanded nohover'})
     i = 0
@@ -54,27 +56,27 @@ def get_game_scores_day(year,month,day):
     return res
 
         
-def get_standings(year,month,day,conference):
-    url = url_builder(month,day,year)
-    html = urlopen(url)
-    soup = BeautifulSoup(html,features="html.parser")
+# def get_standings(year,month,day,conference):
+#     url = url_builder(month,day,year)
+#     html = urlopen(url)
+#     soup = BeautifulSoup(html,features="html.parser")
 
-    i = 0
-    if conference == 'E':
-        i = 0
-    elif conference == 'W':
-        i = 1
-    table = soup.find('div',{'class':'standings_confs data_grid section_wrapper'}).findAll('table')[i]
+#     i = 0
+#     if conference == 'E':
+#         i = 0
+#     elif conference == 'W':
+#         i = 1
+#     table = soup.find('div',{'class':'standings_confs data_grid section_wrapper'}).findAll('table')[i]
     
-    headers = [th.getText() for th in table.find('tr').findAll('th')]
+#     headers = [th.getText() for th in table.find('tr').findAll('th')]
 
-    rows = table.find('tbody').findAll('tr')
-    data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
-                for i in range(len(rows))]
+#     rows = table.find('tbody').findAll('tr')
+#     data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
+#                 for i in range(len(rows))]
 
-    res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
-    # print(res)
-    return res
+#     res = pd.DataFrame(data, columns = headers).to_dict(orient='index')
+#     # print(res)
+#     return res
 
 
 
@@ -94,7 +96,7 @@ def get_game_scores_month(year,month):
     data = [[td.getText() for td in [rows[i].find('th')] +  rows[i].findAll('td')]
                 for i in range(len(rows))]
     exclude = {1,6,7,8,9}
-    res = pd.DataFrame(data, columns = headers).drop(columns=[headers[i] for i in exclude]).to_dict(orient='record')
+    res = pd.DataFrame(data, columns = headers).drop(columns=[headers[i] for i in exclude]).to_dict(orient='records')
     # print(res)
     return res
 
@@ -109,7 +111,7 @@ def get_game_scores_season(year):
     res["ignoreme"] = True
     i = 0
     for season_month in season_months:
-        for game in get_games_month(year,season_month):
+        for game in get_game_scores_month(year,season_month):
             res[i] = game
             i+=1
     # print(res)

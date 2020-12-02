@@ -25,11 +25,10 @@ def url_builder(year,month,day,home_team):
 def get_away_team(year,month,day,home_team,soup = None):
     if soup is None:
         url = url_builder(year,month,day,home_team)
-        print(url)
         html = urlopen(url)
         soup = BeautifulSoup(html,features="html.parser")
     res = soup.find("div",{"class": "scorebox"}).find("div",{"itemprop":"performer"}).find("strong").getText().strip('\n\t')
-    print(res)
+    # print(res)
     return res
 
 
@@ -89,7 +88,7 @@ def get_game_table(year,month,day,home_team,team='HOME',stats='BASIC',time="G",s
 
 def get_game(year,month,day,home_team):
     url = url_builder(year,month,day,home_team)
-    print(url)
+    # print(url)
     html = urlopen(url)
     soup = BeautifulSoup(html,features="html.parser")
     res = {}
@@ -110,4 +109,3 @@ def get_game(year,month,day,home_team):
         res[key] = table
     # print(res)
     return res
-# get_game(2020,10,11,'MIA')
