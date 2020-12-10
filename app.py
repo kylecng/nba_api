@@ -37,6 +37,21 @@ def home():
 
 
 
+@app.route('/players/<last_name>/<first_name>/per_game_stats', methods=['GET'])
+def get_player_per_game_stats(first_name,last_name):
+    ref = db.reference(request.path)
+    res = ref.get()
+    if (res == None):
+        res = player.get_player_per_game_stats(first_name,last_name)
+    ref.set(res)
+    return res
+
+
+
+
+
+
+
 
 @app.route('/games/<int:year>/<int:month>/<int:day>/games_data/<home_team>', methods=['GET'])
 def get_game(year,month,day,home_team):
@@ -72,19 +87,6 @@ def get_game_scores_season(year):
     ref.set(res)
     return res
 
-
-
-
-
-
-@app.route('/players/<last_name>/<first_name>/per_game_stats', methods=['GET'])
-def get_player_per_game_stats(first_name,last_name):
-    ref = db.reference(request.path)
-    res = ref.get()
-    if (res == None):
-        res = player.get_player_per_game_stats(first_name,last_name)
-    ref.set(res)
-    return res
 
 
 
