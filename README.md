@@ -12,8 +12,10 @@ Retrieve relevant NBA player, team, and season stats. Data is webscraped from ba
   `GET`
 - URL Params
   Required:
-  `last_name=[string]`
-  `first_name=[string]`
+  ```
+  last_name=[string]
+  `first_name=[string]
+  ```
 - Response
   `{"0":{"Season":"2003-04","Age":"19","Tm":"CLE","Lg":"NBA","Pos":"SG","G":"79","GS":"79","MP":"39.5","FG":"7.9","FGA":"18.9","FG%":".417","3P":"0.8","3PA":"2.7","3P%":".290","2P":"7.1","2PA":"16.1","2P%":".438","eFG%":".438","FT":"4.4","FTA":"5.8","FT%":".754","ORB":"1.3","DRB":"4.2","TRB":"5.5","AST":"5.9","STL":"1.6","BLK":"0.7","TOV":"3.5","PF":"1.9","PTS":"20.9"},"1":{"Season":"2004-05","Age":"20","Tm":"CLE","Lg":"NBA","Pos":"SF","G":"80","GS":"80","MP":"42.4","FG":"9.9","FGA":"21.1","FG%":".472","3P":"1.4","3PA":"3.9","3P%":".351","2P":"8.6","2PA":"17.2","2P%":".499","eFG%":".504","FT":"6.0","FTA":"8.0","FT%":".750","ORB":"1.4","DRB":"6.0","TRB":"7.4","AST":"7.2","STL":"2.2","BLK":"0.7","TOV":"3.3","PF":"1.8","PTS":"27.2"}...}`
 
