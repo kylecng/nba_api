@@ -1,5 +1,7 @@
 # NBA API
 
+Retrieve relevant NBA player, team, and season stats. Data is webscraped from basketball-reference.com and cached in a database.
+
 ## Player
 
 ### Player Per Game Stats
@@ -31,6 +33,7 @@
   day=[int]
   ```
 - Response
+  `{"away_team":"Los Angeles Lakers","game_location":"The Arena, Bay Lake, Florida","boxscore_home_basic_g":{"0":{"Player":"LeBron James","MP":"41:13","FG":"13","FGA":"20","FG%":".650","3P":"1","3PA":"5","3P%":".200","FT":"1","FTA":"4","FT%":".250","ORB":"3","DRB":"11","TRB":"14","AST":"10","STL":"1","BLK":"0","TOV":"1","PF":"3","PTS":"28","Plus-Minus":"+18"}...},"boxscore_home_basic_q1":{"0":{"Player":"LeBron James","MP":"10:25","FG":"4","FGA":"5","FG%":".800","3P":"0","3PA":"1","3P%":".000","FT":"1","FTA":"1","FT%":"1.000","ORB":"0","DRB":"5","TRB":"5","AST":"3","STL":"0","BLK":"0","TOV":"0","PF":"0","PTS":"9","Plus-Minus":"+7"}...}...}`
 
 ### Daily Game Scores
 
@@ -60,6 +63,7 @@
   year=[int]
   ```
 - Response
+  `{"0":{"date":"Tue, Oct 22, 2019","away_team":"New Orleans Pelicans","away_score":"122","home_team":"Toronto Raptors","home_score":"130"},"1":{"date":"Tue, Oct 22, 2019","away_team":"Los Angeles Lakers","away_score":"102","home_team":"Los Angeles Clippers","home_score":"112"}...}`
 
 ## Team
 
@@ -75,6 +79,7 @@
   team_name=[string]
   ```
 - Response
+  `{"0":{"Season":"2020-21","Lg":"NBA","Team":"Los Angeles Lakers","W":"0","L":"0","WL%":"","Finish":"1st of 5","SRS":"","\u00a0":"","Pace":"","Rel Pace":"","ORtg":"","Rel ORtg":"","DRtg":"","Rel DRtg":"","Playoffs":"","Coaches":"","Top WS":""},"1":{"Season":"2019-20","Lg":"NBA","Team":"Los Angeles Lakers*","W":"52","L":"19","WL%":".732","Finish":"1st of 5","SRS":"6.28","\u00a0":"","Pace":"100.9","Rel Pace":"0.6","ORtg":"112.0","Rel ORtg":"1.4","DRtg":"106.3","Rel DRtg":"-4.3","Playoffs":"Won Finals","Coaches":"F. Vogel (52-19)","Top WS":"A. Davis\u00a0(11.1)"}...}`
 
 ### Team Total Stats
 
