@@ -12,9 +12,12 @@ def url_builder(year,month=None,day=None):
         if month is not None:
             builder.append('-')
             if isinstance(month,int):
-                builder.append(str(months[month]).lower())
+                m = str(months[month]).lower()
             else:
-                builder.append(month.lower())
+                m = month.lower()
+            m = m.split()
+            m = '-'.join(m)
+            builder.append(m)
         builder.append('.html')
     else:
         builder = ["https://www.basketball-reference.com/boxscores/?month="]
@@ -106,7 +109,7 @@ def get_game_scores_season(year):
     html = urlopen(url)
     soup = BeautifulSoup(html,features="html.parser")
     season_months = [season_month.getText().strip('\n\t').lower() for season_month in soup.find('div',{'role':'main'}).find('div',{'class':'filter'}).findAll('div')]
-    print(season_months)
+    # print(season_months)
     res = {}
     res["ignoreme"] = True
     i = 0
