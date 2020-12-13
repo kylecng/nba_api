@@ -2,7 +2,12 @@
 
 Retrieve relevant NBA player, team, and season stats. Data is webscraped from basketball-reference.com and cached in a database.
 
-## Player
+## Base URL
+```
+https://basketball-reference-api.herokuapp.com/
+```
+
+## Player Calls
 
 ### Player Per Game Stats
 
@@ -19,7 +24,7 @@ Retrieve relevant NBA player, team, and season stats. Data is webscraped from ba
 - Response
   `{"0":{"Season":"2003-04","Age":"19","Tm":"CLE","Lg":"NBA","Pos":"SG","G":"79","GS":"79","MP":"39.5","FG":"7.9","FGA":"18.9","FG%":".417","3P":"0.8","3PA":"2.7","3P%":".290","2P":"7.1","2PA":"16.1","2P%":".438","eFG%":".438","FT":"4.4","FTA":"5.8","FT%":".754","ORB":"1.3","DRB":"4.2","TRB":"5.5","AST":"5.9","STL":"1.6","BLK":"0.7","TOV":"3.5","PF":"1.9","PTS":"20.9"},"1":{"Season":"2004-05","Age":"20","Tm":"CLE","Lg":"NBA","Pos":"SF","G":"80","GS":"80","MP":"42.4","FG":"9.9","FGA":"21.1","FG%":".472","3P":"1.4","3PA":"3.9","3P%":".351","2P":"8.6","2PA":"17.2","2P%":".499","eFG%":".504","FT":"6.0","FTA":"8.0","FT%":".750","ORB":"1.4","DRB":"6.0","TRB":"7.4","AST":"7.2","STL":"2.2","BLK":"0.7","TOV":"3.3","PF":"1.8","PTS":"27.2"}...}`
 
-## Games
+## Games Calls
 
 ### Game Data
 
@@ -67,7 +72,7 @@ Retrieve relevant NBA player, team, and season stats. Data is webscraped from ba
 - Response
   `{"0":{"date":"Tue, Oct 22, 2019","away_team":"New Orleans Pelicans","away_score":"122","home_team":"Toronto Raptors","home_score":"130"},"1":{"date":"Tue, Oct 22, 2019","away_team":"Los Angeles Lakers","away_score":"102","home_team":"Los Angeles Clippers","home_score":"112"}...}`
 
-## Team
+## Team Calls
 
 ### Team Seasons Summaries
 
@@ -111,7 +116,7 @@ Retrieve relevant NBA player, team, and season stats. Data is webscraped from ba
 - Response
   `{"0":{"Season":"2019-20","Lg":"NBA","Tm":"LAL","W":"52","L":"19","Finish":"1","Age":"29.5","Height":"6-6","Weight":"224","G":"71","MP":"240.7","FG":"42.3","FGA":"88.3","FG%":".480","3P":"11.0","3PA":"31.6","3P%":".349","2P":"31.3","2PA":"56.7","2P%":".552","FT":"17.7","FTA":"24.3","FT%":".729","ORB":"10.7","DRB":"35.1","TRB":"45.7","AST":"25.4","STL":"8.6","BLK":"6.6","TOV":"15.2","PF":"20.7","PTS":"113.4"},"1":{"Season":"2018-19","Lg":"NBA","Tm":"LAL","W":"37","L":"45","Finish":"4","Age":"26.2","Height":"6-7","Weight":"219","G":"82","MP":"241.2","FG":"42.6","FGA":"90.5","FG%":".470","3P":"10.3","3PA":"31.0","3P%":".333","2P":"32.2","2PA":"59.6","2P%":".541","FT":"16.3","FTA":"23.3","FT%":".699","ORB":"10.2","DRB":"36.4","TRB":"46.6","AST":"25.6","STL":"7.5","BLK":"5.4","TOV":"15.7","PF":"20.7","PTS":"111.8"}...}`
 
-## Team Season
+## Team Season Calls
 
 ### Team Season Game Scores
 
